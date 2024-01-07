@@ -61,8 +61,13 @@ test("multiplierByCurrency", () => {
   expect(chfResult).toEqual(usdResult);
 });
 
+const sum = (moneys: number[]) => {};
+
 test("sum of moneys", () => {
-  const money1 = 5;
-  const money2 = 5;
-  expect(money1 + money2).toEqual(10);
+  // when
+  const moneys = [5, 5];
+  const sumResult = sum(moneys);
+
+  // then
+  expect(sumResult).toEqual(10);
 });
