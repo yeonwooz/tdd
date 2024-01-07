@@ -1,8 +1,5 @@
 import { Currency } from '../enum';
-
-const multiplier = (money: number, num: number): number => {
-    return money * num;
-};
+import { convertToDollar, multiplier, multiplyWithCurrency, sum, sumWithCurrency } from '../src/functions';
 
 test('multiply', () => {
     // when
@@ -14,25 +11,6 @@ test('multiply', () => {
     expect(result).toEqual(money * num);
 });
 
-const getExchangeRate = (currency: Currency) => {
-    switch (currency) {
-        case Currency.USD:
-            return 1;
-        case Currency.CHF:
-            return 2;
-        default:
-            return 1;
-    }
-};
-
-const multiplyWithCurrency = (dollorPrice: number, currency: Currency) => {
-    return dollorPrice * getExchangeRate(currency);
-};
-
-const convertToDollar = (price: number, currency: Currency) => {
-    return Math.floor(price / getExchangeRate(currency));
-};
-
 test('multiply with Currency', () => {
     // when
     const money = 5;
@@ -43,23 +21,6 @@ test('multiply with Currency', () => {
     expect(chfResult).toEqual(5);
     expect(chfResult).toEqual(usdResult);
 });
-
-const sum = (moneys: number[]) => {
-    return moneys.reduce((acc, cur) => acc + cur, 0);
-};
-
-const sumWithCurrency = (
-    moneys: {
-        amount: number;
-        currency: Currency;
-    }[],
-    targetCurrency: Currency,
-) => {
-    const sum = moneys.reduce((acc, cur) => {
-        return acc + convertToDollar(multiplyWithCurrency(cur.amount, cur.currency), cur.currency);
-    }, 0);
-    return multiplyWithCurrency(sum, targetCurrency);
-};
 
 test('sum', () => {
     // when
