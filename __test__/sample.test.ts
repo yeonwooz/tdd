@@ -60,3 +60,9 @@ test("multiplierByCurrency", () => {
   expect(chfResult).toEqual(5);
   expect(chfResult).toEqual(usdResult);
 });
+
+test("sum of moneys", () => {
+  const money1 = 5;
+  const money2 = 5;
+  expect(money1 + money2).toEqual(10);
+});
