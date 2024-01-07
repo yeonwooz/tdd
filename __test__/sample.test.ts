@@ -8,7 +8,7 @@ const multiplier = (money: number, num: number): number => {
   return money * num;
 };
 
-test("multiplier", () => {
+test("multiply", () => {
   // when
   const money = 5;
   const num = 2;
@@ -34,7 +34,7 @@ const getExchangeRate = (currency: Currency) => {
   }
 };
 
-const calcuatePrice = (dollorPrice: number, currency: Currency) => {
+const multiplyWithCurrency = (dollorPrice: number, currency: Currency) => {
   return dollorPrice * getExchangeRate(currency);
 };
 
@@ -42,17 +42,15 @@ const convertToDollar = (price: number, currency: Currency) => {
   return Math.floor(price / getExchangeRate(currency));
 };
 
-test("multiplierByCurrency", () => {
-  // given
-
+test("multiply with Currency", () => {
   // when
   const money = 5;
   const usdResult = convertToDollar(
-    calcuatePrice(money, Currency.USD),
+    multiplyWithCurrency(money, Currency.USD),
     Currency.USD,
   );
   const chfResult = convertToDollar(
-    calcuatePrice(money, Currency.CHF),
+    multiplyWithCurrency(money, Currency.CHF),
     Currency.CHF,
   );
   // then
@@ -61,13 +59,55 @@ test("multiplierByCurrency", () => {
   expect(chfResult).toEqual(usdResult);
 });
 
-const sum = (moneys: number[]) => {};
+const sum = (moneys: number[]) => {
+  return moneys.reduce((acc, cur) => acc + cur, 0);
+};
 
-test("sum of moneys", () => {
+const sumWithCurrency = (
+  moneys: {
+    amount: number;
+    currency: Currency;
+  }[],
+  targetCurrency: Currency,
+) => {
+  const sum = moneys.reduce((acc, cur) => {
+    return (
+      acc +
+      convertToDollar(
+        multiplyWithCurrency(cur.amount, cur.currency),
+        cur.currency,
+      )
+    );
+  }, 0);
+  return multiplyWithCurrency(sum, targetCurrency);
+};
+
+test("sum", () => {
   // when
   const moneys = [5, 5];
   const sumResult = sum(moneys);
 
   // then
   expect(sumResult).toEqual(10);
+});
+
+test("sum with currency", () => {
+  // when
+  const moneys = [
+    {
+      amount: 5,
+      currency: Currency.USD,
+    },
+    {
+      amount: 5,
+      currency: Currency.CHF,
+    },
+
+    
+  ];
+  const targetCurrency = Currency.CHF;
+  const result = sumWithCurrency(moneys, targetCurrency);
+
+  // then
+  expect(result).toEqual(20);
 });
