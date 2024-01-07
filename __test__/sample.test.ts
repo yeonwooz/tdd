@@ -4,9 +4,17 @@ test("Dummy unit test", () => {
   expect(actual).toBe(3);
 });
 
+const multiplier = (money, num) => {
+  return money * num;
+};
+
 test("multiplier", () => {
+  // when
   const money = 5;
   const num = 2;
-  const multiplied = money * num;
-  expect(multiplied).toBe(10);
+  const result = multiplier(money, num);
+
+  // then
+  expect(result).toBe(money * num);
 });
+
