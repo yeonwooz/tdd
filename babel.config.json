@@ -1,0 +1,13 @@
+{
+    "presets": ["@babel/preset-typescript", ["@babel/preset-env", { "modules": false }]],
+    "plugins": [
+        [
+            "module-extension-resolver",
+            {
+                "srcExtensions": [".js", ".cjs", ".mjs", ".es", ".es6", ".ts", ".node", ".json"],
+                "dstExtension": ".js",
+                "extensionsToKeep": [".json"]
+            }
+        ]
+    ]
+}
